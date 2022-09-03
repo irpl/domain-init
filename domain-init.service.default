@@ -1,0 +1,15 @@
+[Unit]
+Description=Service to point a DNS record to the host machine
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python /usr/local/lib/python_demo_service/python_demo_service.py
+Environment=PYTHONUNBUFFERED=1
+
+[Service]
+ExecStart=/home/user/domain-init/.venv/bin/python /home/user/domain-init/main.py
+ExecStart=/home/path/to/venv/bin/python app.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
