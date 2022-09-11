@@ -2,3 +2,4 @@
 .venv
 *.service
 *.sh
+*.log
