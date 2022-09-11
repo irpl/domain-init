@@ -1,8 +1,12 @@
 import os
 import requests
+import datetime
 from dotenv import load_dotenv
 
 load_dotenv()
+
+def logger(msg):
+  print(f"[{datetime.now().replace(microsecond=0).isoformat()}] INFO {msg}")
 
 BASEURL = os.getenv("BASEURL")
 DOMAIN = os.getenv("DOMAIN")
@@ -34,15 +38,15 @@ record = [ dns_record for dns_record in dns_records_arr if dns_record["hostname"
 
 if not len(record) == 0:
   record = record[0]
-  print("Found existing record.")
+  logger("Found existing record.")
   previous_ip = record["value"]
 
   if not current_ip == previous_ip:
-    print("Deleting existing record.")
+    logger("Deleting existing record.")
     record_id = record["id"]
     delete_response = requests.delete(BASEURL + f"/dns_zones/{zone_id}/dns_records/{record_id}", headers=HEADERS)
   else:
-    print("Record is up to date.")
+    logger("Record is up to date.")
     exit(0)
 
 new_record = {
@@ -57,5 +61,5 @@ new_record = {
     "tag": None
 }
 
-print("Creating new record.")
+logger("Creating new record.")
 new_record_response = requests.post(BASEURL + f"/dns_zones/{zone_id}/dns_records", json=new_record, headers=HEADERS)
