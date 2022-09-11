@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def logger(msg):
-  print(f"[{datetime.now().replace(microsecond=0).isoformat()}] INFO {msg}")
+  print(f"[{datetime.datetime.now().replace(microsecond=0).isoformat()}] INFO {msg}")
 
 BASEURL = os.getenv("BASEURL")
 DOMAIN = os.getenv("DOMAIN")
